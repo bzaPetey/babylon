@@ -1,16 +1,5 @@
-/*
-Four tings all babylon applications need:
-canvas element
-engine
-scene
-camera
-
-Why not use the playground?
-
-WebGPU: https://doc.babylonjs.com/setup/support/webGPU
- */
-
 import * as BABYLON from "@babylonjs/core";
+import { EvilCubie } from "./EvilCubie";
 
 const canvas = document.getElementById("renderCanvas");
 
@@ -26,6 +15,16 @@ const createScene = function () {
 };
 
 const scene = createScene();
+const evilCubie = new EvilCubie(scene, "Mr. Cube");
+
+scene.onPointerUp = function castRay() {
+  const hit = scene.pick(scene.pointerX, scene.pointerY);
+
+  if (hit.pickedMesh)
+    if (hit.pickedMesh.name === evilCubie.mesh.name) {
+      evilCubie.clicked();
+    }
+};
 
 //render the scene every frame.
 engine.runRenderLoop(function () {
