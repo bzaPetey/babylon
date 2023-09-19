@@ -8,7 +8,19 @@ await engine.initAsync();
 
 const createScene = function () {
   const scene = new BABYLON.Scene(engine, true);
-  scene.createDefaultCameraOrLight(true, false, true);
+
+  // Parameters : name, position, scene
+  const camera = new BABYLON.UniversalCamera(
+    "UniversalCamera",
+    new BABYLON.Vector3(0, 0, -10),
+    scene
+  );
+
+  // Targets the camera to a particular position. In this case the scene origin
+  camera.setTarget(BABYLON.Vector3.Zero());
+
+  // Attach the camera to the canvas
+  camera.attachControl(canvas, true);
 
   const box = new BABYLON.MeshBuilder.CreateBox(
     "myBox",
