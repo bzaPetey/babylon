@@ -12,7 +12,13 @@ const createScene = function () {
   // Parameters : name, position, scene
   const camera = new BABYLON.UniversalCamera(
     "UniversalCamera",
-    new BABYLON.Vector3(0, 0, -10),
+    new BABYLON.Vector3(1, 1, -5),
+    scene
+  );
+
+  const light = new BABYLON.DirectionalLight(
+    "DirectionalLight",
+    new BABYLON.Vector3(-0.5, -1, 0.25),
     scene
   );
 
@@ -25,7 +31,7 @@ const createScene = function () {
   const box = new BABYLON.MeshBuilder.CreateBox(
     "myBox",
     {
-      size: 0.2,
+      size: 1,
     },
     scene
   );

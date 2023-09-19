@@ -18,8 +18,25 @@ await engine.initAsync();
 
 const createScene = function () {
   const scene = new BABYLON.Scene(engine);
-  scene.createDefaultCameraOrLight(true, false, true);
 
+  // Parameters: name, alpha, beta, radius, target position, scene
+  const camera = new BABYLON.ArcRotateCamera(
+    "Camera",
+    1,
+    1,
+    5,
+    new BABYLON.Vector3(0, 0, 0),
+    scene
+  );
+
+  const light = new BABYLON.DirectionalLight(
+    "DirectionalLight",
+    new BABYLON.Vector3(-0.5, -1, 0.25),
+    scene
+  );
+
+  // This attaches the camera to the canvas
+  camera.attachControl(canvas, true);
   return scene;
 };
 
@@ -28,7 +45,7 @@ const scene = createScene();
 const box = new BABYLON.MeshBuilder.CreateBox(
   "myBox",
   {
-    size: 0.2,
+    size: 1,
   },
   scene
 );
