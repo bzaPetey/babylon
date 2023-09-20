@@ -1,11 +1,9 @@
 import * as BABYLON from "@babylonjs/core";
 
 const canvas = document.getElementById("renderCanvas");
-const engine = new BABYLON.Engine(canvas, true, {
-  preserveDrawingBuffer: true,
-  stencil: true,
-  disableWebGL2Support: false,
-});
+
+const engine = new BABYLON.WebGPUEngine(canvas);
+await engine.initAsync();
 
 const createScene = async function () {
   // This creates a basic Babylon Scene object (non-mesh)
@@ -38,6 +36,22 @@ const createScene = async function () {
   const box = new BABYLON.MeshBuilder.CreateBox("box", { size: 1 }, scene);
   box.position.y = 4;
 
+  const sphere = BABYLON.MeshBuilder.CreateSphere(
+    "sphere1",
+    { diameter: 1 },
+    scene
+  );
+  sphere.position.y = 4;
+  sphere.position.x = -2;
+
+  const sphere2 = BABYLON.MeshBuilder.CreateSphere(
+    "sphere2",
+    { diameter: 2 },
+    scene
+  );
+  sphere2.position.y = 4;
+  sphere2.position.x = 2;
+
   // Our built-in 'ground' shape.
   const ground = BABYLON.MeshBuilder.CreateGround(
     "ground",
@@ -56,7 +70,20 @@ const createScene = async function () {
   const boxAggregate = new BABYLON.PhysicsAggregate(
     box,
     BABYLON.PhysicsShapeType.BOX,
-    { mass: 1, restitution: 0.25 },
+    { mass: 1, restitution: 0.75 },
+    scene
+  );
+
+  const sphereAggregate = new BABYLON.PhysicsAggregate(
+    sphere,
+    BABYLON.PhysicsShapeType.SPHERE,
+    { mass: 1, restitution: 0.75 },
+    scene
+  );
+  const sphereAggregate2 = new BABYLON.PhysicsAggregate(
+    sphere2,
+    BABYLON.PhysicsShapeType.SPHERE,
+    { mass: 2, restitution: 0.75 },
     scene
   );
 
