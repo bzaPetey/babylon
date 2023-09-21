@@ -1,9 +1,11 @@
 import * as BABYLON from "@babylonjs/core";
 
 const canvas = document.getElementById("renderCanvas");
-
-const engine = new BABYLON.WebGPUEngine(canvas);
-await engine.initAsync();
+const engine = new BABYLON.Engine(canvas, true, {
+  preserveDrawingBuffer: true,
+  stencil: true,
+  disableWebGL2Support: false,
+});
 
 const createScene = async function () {
   // This creates a basic Babylon Scene object (non-mesh)
@@ -61,7 +63,7 @@ const createScene = async function () {
 
   // initialize plugin
   const havokInstance = await HavokPhysics();
-  // DEFAULT VALUES FOLLOW
+
   // pass the engine to the plugin
   const hk = new BABYLON.HavokPlugin(true, havokInstance);
   // enable physics in the scene with a gravity
